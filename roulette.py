@@ -46,6 +46,7 @@ while True:
         time.sleep(delay)
     except RuntimeError as e:
         print(e)
+        print()
         print("Managed to earn %d" % before)
         print("Total bets: %d Total passes: %d" % (totalbets, totalpasses))
         break
