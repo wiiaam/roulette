@@ -77,7 +77,7 @@ while True:
         totalpasses += 1
         if debug:
             print(e)
-        print("Managed to earn 4%d before exceeding bet limit" % before)
+        print("Managed to earn $%d before exceeding bet limit" % before)
         print("Total bets: %d Total passes: %d" % (totalbets, totalpasses))
 
         if money <= 0:
