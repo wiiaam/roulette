@@ -6,8 +6,12 @@ import time
 
 
 money = 1000000  # Starting money
-percent = 0.000001  # Percentage of money to bet
+percent = 0.00000001  # Percentage of money to bet
 delay = 0  # Delay between each pass
+
+totalbets = 0
+totalpasses = 0
+
 
 def bet(amount):
     global money
@@ -36,9 +40,12 @@ while True:
             else:
                 bets += 1
                 tobet *= 2
-        print("Pass complete. Total bets placed: %d Current money: %.02d" % (bets,money))
+        totalbets += bets
+        totalpasses += 1
+        print("Pass complete. Total bets placed: %d Current money: %.02d" % (bets, money))
         time.sleep(delay)
     except RuntimeError as e:
         print(e)
         print("Managed to earn %d" % before)
+        print("Total bets: %d Total passes: %d" % (totalbets, totalpasses))
         break
