@@ -9,13 +9,14 @@ money = 200  # Starting money
 percent = 0.00000001  # Percentage of money to bet
 delay = 0  # Delay between each pass
 
-staticbet = True
+staticbet = True  # Bet a static amount each pass
 static = 0.05
+
+debug = False  # Print whenever a bet is placed
+
 
 totalbets = 0
 totalpasses = 0
-
-debug = False
 
 
 def bet(amount):
@@ -34,10 +35,24 @@ def bet(amount):
         return False
 
 
+print("Starting run with $%d..." % money)
+if staticbet:
+    print("Bets are static. Betting $%d each pass." % static)
+else:
+    print("Bets are variable. Betting %s of money each pass." % percent)
+
+if debug:
+    if delay > 0:
+        print("Debug logging is on. Setting a delay is recommended")
+    else:
+        print("Debug logging is on.")
+else:
+    print("Debug logging is off.")
+
 while True:
     before = money
+    bets = 1
     try:
-        bets = 1
         if staticbet:
             tobet = math.ceil(money * percent)
         else:
@@ -54,15 +69,17 @@ while True:
         totalbets += bets
         totalpasses += 1
         if debug:
-            print("Pass complete. Total bets placed: %d Current money: $%d" % (bets, money))
+            print("Pass complete. Bets placed: %d Current money: $%d" % (bets, money))
         time.sleep(delay)
     except RuntimeError as e:
+        totalbets += bets
+        totalpasses += 1
         if debug:
             print(e)
-        print("Managed to earn %d" % before)
+        print("Managed to earn 4%d before exceeding bet limit" % before)
         print("Total bets: %d Total passes: %d" % (totalbets, totalpasses))
 
-        if(money == 0):
+        if money <= 0:
             print("Ran out of money.")
             break
         else:
