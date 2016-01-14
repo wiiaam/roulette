@@ -35,9 +35,9 @@ def bet(amount):
         return False
 
 
-print("Starting run with $%d..." % money)
+print("Starting run with $%s..." % money)
 if staticbet:
-    print("Bets are static. Betting $%d each pass." % static)
+    print("Bets are static. Betting $%s each pass." % static)
 else:
     print("Bets are variable. Betting %s of money each pass." % percent)
 
@@ -48,6 +48,7 @@ if debug:
         print("Debug logging is on.")
 else:
     print("Debug logging is off.")
+print("\n")
 
 while True:
     before = money
