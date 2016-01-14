@@ -9,8 +9,13 @@ money = 1000000  # Starting money
 percent = 0.00000001  # Percentage of money to bet
 delay = 0  # Delay between each pass
 
+staticbet = True
+static = 1
+
 totalbets = 0
 totalpasses = 0
+
+debug = False
 
 
 def bet(amount):
@@ -19,11 +24,13 @@ def bet(amount):
         raise RuntimeError("Ran out of money")
     if random.random() > 0.5:
         money += amount
-        print("Bet won. Earned %s" % amount)
+        if debug:
+            print("Bet won. Earned %s" % amount)
         return True
     else:
         money -= amount
-        print("Bet lost. Lost %s" % amount)
+        if debug:
+            print("Bet lost. Lost %s" % amount)
         return False
 
 
@@ -31,9 +38,13 @@ while True:
     before = money
     try:
         bets = 1
-        tobet = math.ceil(money * percent)
+        if staticbet:
+            tobet = math.ceil(money * percent)
+        else:
+            tobet = staticbet
         while True:
-            print("Betting %s total money: %d" % (tobet, money))
+            if debug:
+                print("Betting %s total money: %d" % (tobet, money))
             win = bet(tobet)
             if win:
                 break
@@ -42,7 +53,8 @@ while True:
                 tobet *= 2
         totalbets += bets
         totalpasses += 1
-        print("Pass complete. Total bets placed: %d Current money: %.02d" % (bets, money))
+        if debug:
+            print("Pass complete. Total bets placed: %d Current money: %.02d" % (bets, money))
         time.sleep(delay)
     except RuntimeError as e:
         print(e)
